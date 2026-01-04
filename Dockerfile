@@ -45,9 +45,8 @@ RUN chown -R unit:unit storage bootstrap/cache public \
     && chmod -R 775 storage bootstrap/cache public
 
 # -----------------------
-# Composer deps as unit user
+# Composer deps
 # -----------------------
-USER unit
 RUN composer install --prefer-dist --optimize-autoloader --no-interaction
 
 # -----------------------
@@ -55,10 +54,6 @@ RUN composer install --prefer-dist --optimize-autoloader --no-interaction
 # -----------------------
 RUN npm install && npm run build
 
-# -----------------------
-# Back to root to copy Unit config
-# -----------------------
-USER root
 COPY unit.json /docker-entrypoint.d/unit.json
 
 # -----------------------
