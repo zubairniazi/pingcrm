@@ -19,14 +19,6 @@
         },
         {
             "match": {
-                "uri": "/favicon.ico"
-            },
-            "action": {
-                "share": "/var/www/html/public/favicon.ico"
-            }
-        },
-        {
-            "match": {
                 "uri": "!/index.php"
             },
             "action": {
