@@ -3,13 +3,27 @@
         "*:8000": {
             "pass": "routes",
             "forwarded": {
-                "protocol": "X-Forwarded-Proto",
-                "source": ["<Load balancer IP, Subnet etc.>"]
+                "protocol": "X-Forwarded-Proto"
             }
         }
     },
-
     "routes": [
+        {
+            "match": {
+                "uri": "/build/*"
+            },
+            "action": {
+                "share": "/var/www/html/public$uri"
+            }
+        },
+        {
+            "match": {
+                "uri": "/favicon.ico"
+            },
+            "action": {
+                "share": "/var/www/html/public/favicon.ico"
+            }
+        },
         {
             "match": {
                 "uri": "!/index.php"
@@ -22,11 +36,10 @@
             }
         }
     ],
-
     "applications": {
         "laravel": {
             "type": "php",
-            "root": "/var/www/html/public/",
+            "root": "/var/www/html/public",
             "script": "index.php"
         }
     }

@@ -3,6 +3,12 @@ import laravel from 'laravel-vite-plugin'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+    base: '/build/',
+    build: {
+        manifest: true,
+        outDir: 'public/build',
+        emptyOutDir: true,
+    },
     plugins: [
         laravel({
             input: 'resources/js/app.js',
@@ -19,3 +25,4 @@ export default defineConfig({
         }),
     ],
 })
+
