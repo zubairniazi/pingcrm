@@ -1,38 +1,24 @@
 {
     "listeners": {
-        "*:8000": {
-            "pass": "routes",
-            "forwarded": {
-                "protocol": "X-Forwarded-Proto",
-                "source": ["0.0.0.0/0"]
-            }
-        }
+        "*:8000": { "pass": "routes" }
     },
     "routes": [
         {
-            "match": {
-                "uri": "/build/*"
-            },
-            "action": {
-                "share": "/var/www/html/public$uri"
-            }
+            "match": { "uri": "/build/*" },
+            "action": { "share": "/var/www/html/public/build" }
         },
         {
-            "match": {
-                "uri": "!/index.php"
-            },
+            "match": { "uri": "*" },
             "action": {
-                "share": "/var/www/html/public$uri",
-                "fallback": {
-                    "pass": "applications/laravel"
-                }
+                "share": "/var/www/html/public",
+                "fallback": { "pass": "applications/laravel" }
             }
         }
     ],
     "applications": {
         "laravel": {
             "type": "php",
-            "root": "/var/www/html/public/",
+            "root": "/var/www/html/public",
             "script": "index.php"
         }
     }

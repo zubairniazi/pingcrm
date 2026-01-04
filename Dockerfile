@@ -1,3 +1,6 @@
+# -----------------------
+# Base image
+# -----------------------
 FROM unit:1.34.1-php8.3
 
 # -----------------------
@@ -18,7 +21,7 @@ RUN apt update && apt install -y \
 RUN echo "opcache.enable=1" > /usr/local/etc/php/conf.d/custom.ini \
     && echo "opcache.jit=tracing" >> /usr/local/etc/php/conf.d/custom.ini \
     && echo "opcache.jit_buffer_size=256M" >> /usr/local/etc/php/conf.d/custom.ini \
-    && echo "memory_limit=512M" > /usr/local/etc/php/conf.d/custom.ini \
+    && echo "memory_limit=512M" >> /usr/local/etc/php/conf.d/custom.ini \
     && echo "upload_max_filesize=64M" >> /usr/local/etc/php/conf.d/custom.ini \
     && echo "post_max_size=64M" >> /usr/local/etc/php/conf.d/custom.ini
 
@@ -33,11 +36,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 WORKDIR /var/www/html
 
 # Create directories
-RUN mkdir -p storage bootstrap/cache \
-    && chown -R unit:unit storage bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
+RUN mkdir -p storage bootstrap/cache public/build \
+    && chown -R unit:unit storage bootstrap/cache public \
+    && chmod -R 775 storage bootstrap/cache public
 
-# Copy code
+# Copy app code
 COPY . .
 
 # Fix permissions for copied files
@@ -52,8 +55,13 @@ RUN composer install --prefer-dist --optimize-autoloader --no-interaction
 # -----------------------
 # Build Vite assets as unit
 # -----------------------
-RUN npm install && npm run build
+RUN npm install && npm run build \
+    && chown -R unit:unit public/build \
+    && chmod -R 755 public/build
 
+# -----------------------
+# Copy unit config
+# -----------------------
 COPY unit.json /docker-entrypoint.d/unit.json
 
 # -----------------------
