@@ -40,7 +40,7 @@
     "applications": {
         "laravel": {
             "type": "php",
-            "root": "/var/www/html/public",
+            "root": "/var/www/html/public/",
             "script": "index.php"
         }
     }
