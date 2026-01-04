@@ -1,5 +1,19 @@
 [phases.setup]
-nixPkgs = ["python311Packages.supervisor"]
+nixPkgs = [
+  "nginx",
+  "php82",
+  "php82Packages.composer",
+  "php82Extensions.pdo",
+  "php82Extensions.pdo_mysql",
+  "php82Extensions.mbstring",
+  "php82Extensions.bcmath",
+  "php82Extensions.curl",
+  "php82Extensions.xml",
+  "php82Extensions.zip",
+  "php82Extensions.opcache",
+  "nodejs_20",
+  "python311Packages.supervisor"
+]
 
 [phases.build]
 cmds = [
