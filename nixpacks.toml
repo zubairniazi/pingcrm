@@ -1,0 +1,20 @@
+[phases.setup]
+# You can add extra dependencies if needed, e.g. supervisor to manage processes
+nixPkgs = ["nginx", "python311Packages.supervisor"]
+
+[phases.build]
+cmds = [
+  "npm ci",
+  "npm run build",
+  "cp -r public/* /assets/public/",
+  "composer install --no-dev --optimize-autoloader",
+  "php artisan migrate --force"
+]
+
+[start]
+cmd = "php artisan serve --host 0.0.0.0 --port ${PORT}"
+
+location ~ \.php$ {
++   fastcgi_buffer_size 8k;
+    …
+}
