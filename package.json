@@ -7,7 +7,7 @@
         "fix-code-style": "npm run fix:prettier && npm run fix:eslint",
         "heroku-postbuild": "npm run build && vite build --ssr",
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build && vite build --ssr"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.15",
