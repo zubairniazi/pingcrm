@@ -5,7 +5,7 @@
         "fix:eslint": "eslint --ext .js,.vue resources/js/ --fix",
         "fix:prettier": "prettier --write --loglevel warn 'resources/js/**/*.vue'",
         "fix-code-style": "npm run fix:prettier && npm run fix:eslint",
-        "heroku-postbuild": "npm run build",
+        "heroku-postbuild": "npm run build && vite build --ssr",
         "dev": "vite",
         "build": "vite build"
     },
